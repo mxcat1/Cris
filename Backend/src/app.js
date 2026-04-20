@@ -22,6 +22,7 @@ const ecommerceRoutes = require("./routes/ecommerce.routes")
 const marketingRoutes = require("./routes/marketing.routes")
 const libroReclamacionesRoutes = require("./routes/libro_reclamaciones.routes");
 const features = require("./config/features");
+const authMiddleware = require("./middlewares/auth.middleware");
 
 const app = express()
 
@@ -46,8 +47,13 @@ app.use(cors({
   credentials: true,
 }));
 app.use(express.json())
-// Servir archivos estáticos desde la carpeta src/uploads
-app.use("/uploads", express.static("src/uploads"))
+// S3: Uploads split público/privado (D1=A).
+// /uploads/public → acceso libre (logos, imágenes de producto).
+// /uploads/private → requiere token JWT (comprobantes, docs sensibles).
+// /uploads → grace period para rutas legacy ya persistidas en DB.
+app.use("/uploads/public", express.static("src/uploads/public"));
+app.use("/uploads/private", authMiddleware, express.static("src/uploads/private"));
+app.use("/uploads", express.static("src/uploads"));
 app.use(morgan("dev")) // Para logs en desarrollo
 
 // Rutas API
