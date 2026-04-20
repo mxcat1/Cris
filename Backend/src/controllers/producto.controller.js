@@ -288,7 +288,7 @@ const productoController = {
             // Verificar si el archivo existe y eliminarlo
             if (fs.existsSync(oldImagePath)) {
               fs.unlinkSync(oldImagePath);
-              console.log(`Imagen anterior eliminada: ${oldImagePath}`);
+
             }
           } catch (error) {
             console.error('Error al eliminar imagen anterior:', error);
@@ -481,7 +481,7 @@ const productoController = {
           // Verificar si el archivo existe y eliminarlo
           if (fs.existsSync(imagePath)) {
             fs.unlinkSync(imagePath);
-            console.log(`Imagen del producto eliminada: ${imagePath}`);
+
           }
         } catch (error) {
           console.error('Error al eliminar imagen del producto:', error);
@@ -525,7 +525,6 @@ const productoController = {
         // Verificar si el archivo existe y eliminarlo
         if (fs.existsSync(imagePath)) {
           fs.unlinkSync(imagePath);
-          console.log(`Imagen del producto eliminada: ${imagePath}`);
         }
       } catch (error) {
         console.error('Error al eliminar archivo de imagen:', error);

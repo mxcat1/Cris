@@ -76,7 +76,7 @@ exports.register = async (req, res) => {
       },
     )
   } catch (error) {
-    console.log(error)
+    console.error('Error en register:', error)
     res.status(500).json({ 
       success: false,
       msg: "Hubo un error en el servidor" 
@@ -131,7 +131,7 @@ exports.login = async (req, res) => {
       },
     )
   } catch (error) {
-    console.log(error)
+    console.error('Error en login:', error)
     res.status(500).json({ msg: "Hubo un error" })
   }
 }

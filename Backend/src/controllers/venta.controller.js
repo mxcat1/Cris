@@ -391,7 +391,7 @@ const ventaController = {
   getByDateRange: async (req, res) => {
     try {
       const { fechaInicio, fechaFin } = req.query;
-      console.log("Buscando ventas entre:", fechaInicio, "y", fechaFin);
+
 
       if (!fechaInicio || !fechaFin) {
         return res.status(400).json({
@@ -401,7 +401,7 @@ const ventaController = {
 
       // Usamos una consulta más directa
       const ventas = await Venta.findAll();
-      console.log("Total de ventas en la base de datos:", ventas.length);
+
 
       // Filtramos manualmente para aislar problemas de consulta SQL
       const ventasFiltradas = ventas.filter(venta => {
@@ -409,7 +409,7 @@ const ventaController = {
         return fechaVenta >= fechaInicio && fechaVenta <= fechaFin;
       });
 
-      console.log("Ventas filtradas:", ventasFiltradas.length);
+
       return res.status(200).json(ventasFiltradas);
     } catch (error) {
       console.error('Error:', error);
