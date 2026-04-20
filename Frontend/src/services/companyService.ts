@@ -1,4 +1,5 @@
 import api from "../lib/api"
+import type { AxiosError } from 'axios'
 
 export interface Company {
   id_company: number
@@ -23,7 +24,12 @@ export const fetchCompany = async (): Promise<Company | null> => {
     // If there are multiple companies, return the first one
     return response.data.length > 0 ? response.data[0] : null
   } catch (error) {
-    console.error("Error fetching company:", error)
+    const err = error as AxiosError
+    console.error("Error fetching company:", {
+      status: err?.response?.status,
+      url: err?.config?.url,
+      message: err?.message,
+    })
     return null
   }
 }
@@ -73,7 +79,12 @@ export const fetchCompanyForSales = async (): Promise<Company | null> => {
     // Empresa no configurada — estado de dominio válido (D5 Opción C)
     return null;
   } catch (error) {
-    console.error('Error al obtener empresa para ventas:', error);
+    const err = error as AxiosError
+    console.error('Error al obtener empresa para ventas:', {
+      status: err?.response?.status,
+      url: err?.config?.url,
+      message: err?.message,
+    })
     throw error;
   }
 };

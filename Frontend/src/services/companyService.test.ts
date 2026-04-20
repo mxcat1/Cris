@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { http, HttpResponse } from 'msw';
 import { server } from '../test/msw-handlers';
 import { fetchCompanyForSales } from './companyService';
@@ -46,5 +46,30 @@ describe('fetchCompanyForSales — empty state (V2)', () => {
     expect(result).not.toBeNull();
     expect(result?.ruc).toBe('20000000001');
     expect(result?.razon_social).toBe('Empresa Test S.A.C.');
+  });
+});
+
+// ============================================================
+// B8 — V3: fetchCompanyForSales — log estructurado (no AxiosError crudo)
+// ============================================================
+
+describe('fetchCompanyForSales — log estructurado en error (V3)', () => {
+  it('loguea un objeto estructurado en lugar del AxiosError crudo al fallar la API', async () => {
+    const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+
+    server.use(
+      http.get(`${BASE}/companies`, () => HttpResponse.error()),
+    );
+
+    await expect(fetchCompanyForSales()).rejects.toThrow();
+
+    expect(consoleSpy).toHaveBeenCalledOnce();
+    const secondArg = consoleSpy.mock.calls[0][1];
+    // El segundo argumento NO debe ser una instancia de Error (AxiosError crudo)
+    expect(secondArg).not.toBeInstanceOf(Error);
+    // Debe ser un objeto plano con la forma { status, url, message }
+    expect(secondArg).toMatchObject({ message: expect.any(String) });
+
+    consoleSpy.mockRestore();
   });
 });
