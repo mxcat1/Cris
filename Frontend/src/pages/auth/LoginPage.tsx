@@ -319,7 +319,7 @@ const LoginPage = () => {
                         ? 'from-indigo-600 to-purple-600' 
                         : 'from-indigo-400 to-purple-400'
                     } bg-clip-text text-transparent`}>
-                      EC
+                      CG
                     </span>
                   </div>
                 </div>
@@ -330,7 +330,7 @@ const LoginPage = () => {
                   ? 'from-indigo-600 via-purple-600 to-pink-600' 
                   : 'from-indigo-400 via-purple-400 to-pink-400'
               } bg-clip-text text-transparent`} variants={itemVariants}>
-                ERP-Computacion
+                Criscom Group
               </motion.h1>
 
               <motion.p className={`text-lg mb-6 ${

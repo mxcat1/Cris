@@ -1,0 +1,11 @@
+/node_modules/
+.env
+package-lock.json
+
+# Uploads - ignorar archivos subidos pero mantener estructura de carpetas
+src/uploads/certs/*
+src/uploads/logos/*
+src/uploads/productos/*
+src/uploads/banner/*
+src/uploads/categorias/*
+src/uploads/tarjetas/*

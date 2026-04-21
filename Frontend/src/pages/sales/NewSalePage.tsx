@@ -2528,7 +2528,7 @@ const NewSalePage = () => {
                 </div>
                 <div>
                   <h1 className="text-xl font-bold text-white">Nueva Venta</h1>
-                  <p className="text-white/70 text-sm">Sistema ERP-Computacion POS</p>
+                  <p className="text-white/70 text-sm">Criscom Group · Sistema POS</p>
                 </div>
               </div>
 
