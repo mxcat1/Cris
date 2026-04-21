@@ -1,0 +1,9 @@
+# macOS
+.DS_Store
+
+# Cobertura de tests
+coverage/
+
+# Archivos de entorno locales (no subir al repositorio)
+.env
+!.env.example
