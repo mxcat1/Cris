@@ -8,6 +8,7 @@
 //   - Upload de imágenes NO soportado en v1 (pendiente ciclo ecommerce-features).
 
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { Formik, Form, Field, ErrorMessage } from "formik"
 import * as Yup from "yup"
@@ -108,9 +109,22 @@ const itemVariants = {
 }
 
 const SolicitudImportacion = () => {
+  const router = useRouter()
+  const [mode, setMode] = useState<"nueva" | "consultar">("nueva")
+  const [codigoConsulta, setCodigoConsulta] = useState("")
   const [enviando, setEnviando] = useState(false)
   const [submitted, setSubmitted] = useState(false)
   const [codigoSeguimiento, setCodigoSeguimiento] = useState("")
+
+  const handleConsultar = (e: React.FormEvent) => {
+    e.preventDefault()
+    const trimmed = codigoConsulta.trim().toUpperCase()
+    if (!trimmed) {
+      toast.error("Ingresá el código de seguimiento.")
+      return
+    }
+    router.push(`/seguimiento-solicitud/${encodeURIComponent(trimmed)}`)
+  }
 
   const handleSubmit = async (
     values: Record<string, unknown>,
@@ -193,6 +207,83 @@ const SolicitudImportacion = () => {
           </p>
         </motion.div>
 
+        {/* Toggle: nueva solicitud / consultar estado */}
+        <motion.div variants={itemVariants} className="flex justify-center mb-8">
+          <div className="inline-flex bg-white dark:bg-gray-800 rounded-xl p-1 shadow-md border border-gray-200 dark:border-gray-700">
+            <button
+              type="button"
+              onClick={() => setMode("nueva")}
+              className={`px-6 py-2.5 rounded-lg font-semibold transition-all ${
+                mode === "nueva"
+                  ? "bg-gradient-to-r from-primary to-secondary text-white shadow"
+                  : "text-gray-600 dark:text-gray-400 hover:text-primary"
+              }`}
+            >
+              <FaPaperPlane className="inline mr-2" />
+              Nueva solicitud
+            </button>
+            <button
+              type="button"
+              onClick={() => setMode("consultar")}
+              className={`px-6 py-2.5 rounded-lg font-semibold transition-all ${
+                mode === "consultar"
+                  ? "bg-gradient-to-r from-primary to-secondary text-white shadow"
+                  : "text-gray-600 dark:text-gray-400 hover:text-primary"
+              }`}
+            >
+              <FaSearch className="inline mr-2" />
+              Consultar estado
+            </button>
+          </div>
+        </motion.div>
+
+        {/* Modo: Consultar por código */}
+        {mode === "consultar" && (
+          <motion.div
+            variants={itemVariants}
+            className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl rounded-2xl p-8 md:p-10 shadow-xl border border-gray-200 dark:border-gray-800 mb-8"
+          >
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-3">
+              <FaClipboardList className="text-primary" />
+              Consultar estado de tu solicitud
+            </h2>
+            <p className="text-gray-600 dark:text-gray-400 mb-6">
+              Ingresá el código que recibiste al enviar tu solicitud
+              (formato <span className="font-mono text-sm">SOL-AAAAMMDD-XXXXXX</span>).
+            </p>
+            <form
+              onSubmit={handleConsultar}
+              className="flex flex-col sm:flex-row gap-3"
+            >
+              <input
+                type="text"
+                value={codigoConsulta}
+                onChange={(e) => setCodigoConsulta(e.target.value)}
+                placeholder="SOL-20260421-ABC123"
+                className="flex-1 px-4 py-3 rounded-xl border-2 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-mono"
+                autoFocus
+              />
+              <button
+                type="submit"
+                className="px-6 py-3 rounded-xl bg-gradient-to-r from-primary to-secondary text-white font-bold shadow-lg hover:shadow-2xl transition-all flex items-center justify-center gap-2"
+              >
+                <FaSearch /> Ver estado
+              </button>
+            </form>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-4">
+              Si aún no tenés un código,{" "}
+              <button
+                type="button"
+                onClick={() => setMode("nueva")}
+                className="text-primary hover:underline font-semibold"
+              >
+                enviá una nueva solicitud
+              </button>
+              .
+            </p>
+          </motion.div>
+        )}
+
         {/* Success Message */}
         <AnimatePresence>
           {submitted && codigoSeguimiento && (
@@ -238,8 +329,8 @@ const SolicitudImportacion = () => {
           )}
         </AnimatePresence>
 
-        {/* Form */}
-        {!submitted && (
+        {/* Form — solo en modo nueva y mientras no se haya enviado */}
+        {mode === "nueva" && !submitted && (
           <motion.div
             variants={itemVariants}
             className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl rounded-2xl p-8 md:p-10 shadow-xl border border-gray-200 dark:border-gray-800"
