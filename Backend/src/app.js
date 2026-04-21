@@ -21,6 +21,7 @@ const ofertasDelDiaRoutes = require("./routes/ofertasDelDia.routes")
 const ecommerceRoutes = require("./routes/ecommerce.routes")
 const marketingRoutes = require("./routes/marketing.routes")
 const libroReclamacionesRoutes = require("./routes/libro_reclamaciones.routes");
+const solicitudImportacionRoutes = require("./routes/solicitudImportacion.routes");
 const features = require("./config/features");
 const authMiddleware = require("./middlewares/auth.middleware");
 
@@ -73,6 +74,9 @@ app.use("/api/ofertas-del-dia", ofertasDelDiaRoutes)
 
 if (features.FEATURE_ECOMMERCE) {
   app.use("/api/ecommerce", ecommerceRoutes)
+  // Endpoints admin de solicitudes de importación (hot-patch B).
+  // authMiddleware aplicado en el propio router.
+  app.use("/api/solicitudes-importacion", solicitudImportacionRoutes)
 }
 
 if (features.FEATURE_MARKETING) {

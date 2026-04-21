@@ -38,6 +38,16 @@ router.post("/libro-reclamaciones", ecommerceLibroReclamacionesController.create
 router.get("/tarjetas/:id", ecommerceController.getTarjetaByIdPublic);
 
 // ---------------------------------------------------------------------------
+// Solicitudes de importación — MVP público (hot-patch B)
+// POST crea solicitud sin auth y devuelve codigo_seguimiento único.
+// GET seguimiento/:codigo devuelve vista pública del estado.
+// Cubierto por: __tests__/integration/solicitudes-importacion.test.js
+// ---------------------------------------------------------------------------
+const solicitudImportacionController = require("../controllers/solicitudImportacion.controller");
+router.post("/solicitudes-importacion", solicitudImportacionController.create);
+router.get("/seguimiento/:codigo", solicitudImportacionController.getBySeguimiento);
+
+// ---------------------------------------------------------------------------
 // Stubs para endpoints consumidos por el Ecommerce (Next.js) pero aún no
 // implementados en el ERP. Devuelven respuestas vacías pero válidas
 // (200 + [] o 200 + null) para que la UI no rompa con 404.
