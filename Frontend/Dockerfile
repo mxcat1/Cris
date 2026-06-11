@@ -48,6 +48,6 @@ EXPOSE 80
 # aquí a menos que quites el puerto 80 privilegiado (lo hace Traefik afuera).
 
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
-  CMD wget --quiet --tries=1 --spider http://localhost/ || exit 1
+  CMD wget --quiet --tries=1 --spider http://127.0.0.1/ || exit 1
 
 CMD ["nginx", "-g", "daemon off;"]

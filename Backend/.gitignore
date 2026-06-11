@@ -1,6 +1,5 @@
 /node_modules/
 .env
-package-lock.json
 
 # Uploads - ignorar archivos subidos pero mantener estructura de carpetas
 src/uploads/certs/*
