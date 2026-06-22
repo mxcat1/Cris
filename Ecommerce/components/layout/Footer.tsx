@@ -44,7 +44,7 @@ const Footer = () => {
     {
       name: "WhatsApp",
       icon: FaWhatsapp,
-      url: "https://wa.me/51967411110?text=Hola%2C%20me%20gustar%C3%ADa%20consultar%20sobre%20productos%20de%20tecnolog%C3%ADa",
+      url: "https://wa.me/51904589554?text=Hola%2C%20me%20gustar%C3%ADa%20consultar%20sobre%20productos%20de%20tecnolog%C3%ADa",
       color: "hover:bg-green-500",
       gradient: "from-green-500 to-green-600"
     },
@@ -73,9 +73,9 @@ const Footer = () => {
   ]
 
   const contactInfo = [
-    { icon: MdPhone, text: "+51 967 411 110", href: "tel:+51967411110", label: "Llámanos" },
+    { icon: MdPhone, text: "+51 904 589 554", href: "tel:+51904589554", label: "Llámanos" },
     { icon: MdEmail, text: "contacto@criscomgroup.com.pe", href: "mailto:contacto@criscomgroup.com.pe", label: "Escríbenos" },
-    { icon: MdLocationOn, text: "Lima, Perú", href: null, label: "Visítanos" }
+    { icon: MdLocationOn, text: "Arequipa, Perú", href: null, label: "Visítanos" }
   ]
 
   const handleNewsletterSubmit = (e: React.FormEvent) => {
