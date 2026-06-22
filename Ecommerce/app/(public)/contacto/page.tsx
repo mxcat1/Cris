@@ -292,7 +292,7 @@ const Contacto = () => {
                     href="tel:+51967411110"
                     className="text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-fv-gold transition-colors"
                   >
-                    +51 967 411 110
+                    +51 904 589 554
                   </a>
                 </div>
               </motion.div>
